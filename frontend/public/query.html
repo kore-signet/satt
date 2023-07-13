@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Search at the Table</title>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:ital,wght@1,400;1,700&display=swap"
+    rel="stylesheet" />
+  <link href="prism.css" rel="stylesheet" />
+  <link rel="icon" href="icon.png" />
+  <script defer data-domain="search.fatt.fish" src="https://plausible.cat-girl.gay/js/script.js"></script>
+  <style>
+    p, ul, h3 {
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="content">
+    <h2>
+      <span class="small_title">QUERY AT THE<br /></span><span class="large_title">TABLE</span>
+    </h2>
+    <p>
+    <h3>Search at the Table supports two query types:</h3>
+    <ul style="font-size:1.2em">
+      <li><i>exact match:</i> returns results matching the exact phrase asked for</li>
+      <li><i>advanced:</i> in addition to phrase matching, this supports boolean operators.</li>
+    </ul>
+    </p>
+    <p style="margin-top: 1.5em">
+    <h3>current booolean operators supported</h3>
+    </p>
+    <p></p>
+    <ul style="text-align: left; font-size: 1.2em; margin-top: 1.5em">
+      <li>AND (aliases <code>and, &&</code>)</li>
+      <li>OR (aliases <code>or, ||</code>)</li>
+    </ul>
+    </p>
+    <p>
+    <h3>some example queries</h3>
+    </p>
+    <ul style="text-align: left; font-size: 1.2em">
+      <li><a class="link" href="/?q=(keith+OR+austin)+AND+any+sound&kind=advanced" target="_blank" rel="noopener">every sentence containing either Keith or Austin, as well as the phrase "any sound"</a>
+        <p>
+          <!-- <pre style="text-align: left"> -->
+          <code class="language-javascript">
+            (keith OR austin) AND "any sound"
+          </code>
+        </p>
+        <!-- </pre> -->
+      </li>
+      <li><a class="link"  href="/?q=jack+%26%26+lem&kind=advanced"  target="_blank" rel="noopener">every sentence that mentions both Jack and Lem</a>
+        <p>
+          <!-- <pre style="text-align: left"> -->
+          <code class="language-javascript">
+            jack && lem
+          </code>
+        </p>
+        <!-- </pre> -->
+      </li>
+      <li><a class="link" href="/?q=signet+or+belgard&kind=advanced" target="_blank" rel="noopener">every sentence that mentions either Signet or Belgard</a>
+        <p>
+          <!-- <pre style="text-align: left"> -->
+          <code class="language-javascript">
+            signet or belgard
+          </code>
+        </p>
+        <!-- </pre> -->
+      </li>
+    </ul>
+  </div>
+  <script src="prism.js"></script>
+</body>
+
+</html>

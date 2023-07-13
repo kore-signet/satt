@@ -1,0 +1,39 @@
+[package]
+name = "satt"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-cors = "0.6.4"
+actix-files = { version = "0.6.2", features = ["tokio-uring"] }
+actix-web = "4.3.1"
+arc-swap = "1.6.0"
+arrayvec = { version = "0.7.4", features = ["serde"] }
+base64-url = "2.0.0"
+bytemuck = { version = "1.13.1", features = ["derive"] }
+itertools = "0.11.0"
+joie = { version = "0.1.0", git = "https://github.com/kore-signet/joie.git" }
+nyoom-json = "0.3.0"
+postcard = { version = "1.0.4", features = ["use-std"] }
+rkyv = "0.7.42"
+serde = { version = "1.0.169", features = ["derive"] }
+serde_json = "1.0.100"
+smartstring = { version = "1.0.1", features = ["serde"] }
+storage = { version = "0.1.0", git = "https://github.com/kore-signet/joie.git" }
+strum = { version = "0.25.0", features = ["derive"] }
+tempfile = "3.6.0"
+zip = "0.6.6"
+mimalloc = { version = "*", default-features = false }
+easybench = "1.1.1"
+ureq = { version = "2.7.1", default-features = false, features = ["gzip", "brotli", "tls"] }
+
+[profile.release]
+debug = 2
+
+[profile.production]
+inherits = "release"
+debug = false
+lto = "fat"
+codegen-units = 1

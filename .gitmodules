@@ -1,0 +1,4 @@
+[submodule "data"]
+	path = data
+	url = https://github.com/kore-signet/transcripts-at-the-table-mirror.git
+	branch = data
