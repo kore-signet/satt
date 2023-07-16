@@ -113,6 +113,10 @@ const total_highlights = computed(() => {
   return results.episodes.reduce((acc, ep) => acc + ep.highlights.length, 0)
 })
 
+const time_taken = computed(() => {
+  return duration_humanizer(results.query_took * 1000.0, {maxDecimalPoints: 2})
+})
+
 </script>
 
 <template>
@@ -141,7 +145,7 @@ const total_highlights = computed(() => {
 
       <p class="result-header" v-if="result_err === null && results.episodes.length > 0">
         <b>{{ results.episodes.length }} episodes found so far</b> <br />
-        <span id="total-highlights">({{ total_highlights }} results total | took {{ duration_humanizer(results.query_took * 1000.0, {maxDecimalPoints: 2}) }})</span>
+        <span id="total-highlights">({{ total_highlights }} results total | took {{ time_taken }})</span>
       </p>
 
       <p class="result-header" style="color: #ff4747;" v-else-if="result_err !== null">

@@ -150,10 +150,7 @@ pub async fn search(
     episodes.end();
 
     response_obj.field(UnescapedStr::create("next_page"), next_page.as_deref());
-    response_obj.field(
-        UnescapedStr::create("query_time"),
-        query_time.as_secs_f64(),
-    );
+    response_obj.field(UnescapedStr::create("query_time"), query_time.as_secs_f64());
 
     response_obj.end();
 

@@ -30,7 +30,6 @@ pub async fn update_database(
     db: SharedDatabaseHandle,
     db_dir: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error + Sync + Send>> {
-
     actix_web::rt::task::spawn_blocking(move || {
         let mut mirror_reader = ureq::get("https://github.com/kore-signet/transcripts-at-the-table-mirror/archive/refs/heads/data.zip").call()?.into_reader();
         let mut mirror_bytes = Vec::new();
