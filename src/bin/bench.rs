@@ -1,10 +1,5 @@
-
-
-use joie::{
-    sentence::SentencePart,
-    Database,
-};
-use satt::{EpMetadata, StoredEpisode};
+use joie::{sentence::SentencePart, Database};
+use satt::{EpMetadata, SeasonId, StoredEpisode};
 
 #[allow(dead_code)]
 fn print_highlights(parts: &[SentencePart<'_>]) {
@@ -38,8 +33,20 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 fn bench_query(q: &str, db: &Database<StoredEpisode, EpMetadata, ()>) {
     println!("-// benchmarking query: '{q}' //-");
 
-    let query = db.parse_query(q, (), false).unwrap();
-    let query_opt = db.parse_query(q, (), true).unwrap();
+    let query = db
+        .parse_query(
+            q,
+            |s: &EpMetadata| s.season == SeasonId::TwilightMirage as u8,
+            false,
+        )
+        .unwrap();
+    let query_opt = db
+        .parse_query(
+            q,
+            |s: &EpMetadata| s.season == SeasonId::TwilightMirage as u8,
+            true,
+        )
+        .unwrap();
     assert_eq!(db.query(&query_opt).count(), db.query(&query).count());
 
     println!(

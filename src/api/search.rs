@@ -2,8 +2,9 @@ use std::time::Instant;
 
 use actix_web::{http::StatusCode, web, HttpResponse, HttpResponseBuilder};
 
+use arrayvec::ArrayVec;
 use itertools::Itertools;
-use joie::query::Query;
+use joie::query::{DocumentFilter, Query};
 use joie::sentence::SentenceRange;
 use nyoom_json::UnescapedStr;
 
@@ -12,6 +13,26 @@ use crate::{
 };
 
 use super::SearchRequest;
+
+#[derive(Clone, Debug)]
+enum QueryFilter {
+    Seasons(ArrayVec<SeasonId, 16>),
+    Passthrough,
+}
+
+impl DocumentFilter<EpMetadata> for QueryFilter {
+    fn filter_document(&self, meta: &EpMetadata) -> bool {
+        match self {
+            QueryFilter::Seasons(seasons) => {
+                let season: u8 = meta.season;
+                let season: SeasonId = unsafe { std::mem::transmute(season) };
+
+                seasons.binary_search(&season).is_ok()
+            }
+            QueryFilter::Passthrough => true,
+        }
+    }
+}
 
 #[actix_web::get("/search")]
 pub async fn search(
@@ -35,24 +56,23 @@ pub async fn search(
     let query = {
         if request.seasons.is_empty() {
             match request.kind {
-                QueryKind::Phrase => db.phrase_query(&request.query, ()),
+                QueryKind::Phrase => db.phrase_query(&request.query, QueryFilter::Passthrough),
                 QueryKind::Advanced => db
-                    .parse_query(&request.query, (), true)
+                    .parse_query(&request.query, QueryFilter::Passthrough, true)
                     .ok_or(ServerError::InvalidQuery)?,
             }
         } else {
-            let seasons = request.seasons.clone();
-            let filter = move |meta: &EpMetadata| {
-                let season: u8 = meta.season;
-                let season: SeasonId = unsafe { std::mem::transmute(season) };
-
-                seasons.binary_search(&season).is_ok()
-            };
-
             match request.kind {
-                QueryKind::Phrase => db.phrase_query(&request.query, filter),
+                QueryKind::Phrase => db.phrase_query(
+                    &request.query,
+                    QueryFilter::Seasons(request.seasons.clone()),
+                ),
                 QueryKind::Advanced => db
-                    .parse_query(&request.query, filter, true)
+                    .parse_query(
+                        &request.query,
+                        QueryFilter::Seasons(request.seasons.clone()),
+                        true,
+                    )
                     .ok_or(ServerError::InvalidQuery)?,
             }
             // db.parse_query(&request.query, )
