@@ -35,9 +35,7 @@
       </li>
       <li><i>query</i> - the query to search for</li>
       <li>
-        <i>kind</i> - the format of the query. can be 'keywords', 'phrase',
-        or 'web' - note that currently only 'keywords' and 'phrase'
-        are well tested!
+        <i>kind</i> - the format of the query. can be 'phrase' or 'advanced', see <a class="link" href="/query.html" target="_blank" rel="noopener">query syntax documentation</a>
       </li>
       <li>
         <i>highlight</i> - whether to return highlights for each episode
@@ -57,9 +55,9 @@
             "docs_id": "abc", // google docs id for the transcript
             "slug": "123-abc-deg", // episode slug
             "season": "autumn-in-hieron",
-            "highlights": [
-              [ // aray of highlighted sentences
-                { text: "abc", highlighted: false },
+            "highlights": [  // aray of highlighted sentences
+              [ // a single sentence
+                { text: "abc", highlighted: false }, // components of sentence, and whether they should or shouldn't be highlighted
                 { text: "def", highlighted: true },
                 { text: "efg", highlighted: false },
               ]
