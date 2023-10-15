@@ -79,6 +79,9 @@ const season_options = [
         label: 'Patreon', value: 'patreon'
       },
       {
+        label: 'Media Club Plus', value: 'media-club-plus'
+      },
+      {
         label: 'Other', value: 'other'
       }
     ]

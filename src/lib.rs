@@ -99,6 +99,8 @@ pub enum SeasonId {
     Extras = 11,
     #[strum(serialize = "patreon")]
     Patreon = 12,
+    #[strum(serialize = "media-club-plus")]
+    MediaClubPlus = 14,
     #[strum(serialize = "unknown-string")]
     #[default]
     Other = 13,
