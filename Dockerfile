@@ -7,7 +7,7 @@ RUN npm install .
 RUN npm run build
 
 
-FROM rust:1.84.0-buster as builder
+FROM rust:1.84.0-bullseye as builder
 
 WORKDIR /usr/src/joie
 
@@ -16,7 +16,7 @@ COPY src src
 
 RUN cargo build --profile production --bin satt
 
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 RUN apt-get update && \
     apt-get dist-upgrade -y && \
