@@ -14,6 +14,8 @@ use crate::{
 
 use super::SearchRequest;
 
+const RECORDS_URL: &str = "https://memorious-records.cat-girl.gay";
+
 #[derive(Clone, Debug)]
 enum QueryFilter {
     Seasons(ArrayVec<SeasonId, 16>),
@@ -104,6 +106,12 @@ pub async fn search(
         episode.field("slug", doc.slug.as_str());
         episode.field("title", doc.title.as_str());
 
+        let mut download = episode.object_field("download");
+        download.field("txt", format!("{RECORDS_URL}/{}/{}.txt", doc.season.as_ref(), doc.slug.as_str()).as_str());
+        download.field("pdf", format!("{RECORDS_URL}/{}/{}.pdf", doc.season.as_ref(), doc.slug.as_str()).as_str());
+        download.field("epub", format!("{RECORDS_URL}/{}/{}.epub", doc.season.as_ref(), doc.slug.as_str()).as_str());
+        download.end();
+        
         if let Some(docs_id) = doc.docs_id.as_ref() {
             episode.field("docs_id", docs_id.as_str());
         }

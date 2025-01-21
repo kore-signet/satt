@@ -46,7 +46,8 @@ export const all_seasons = [
     "palisade",
     "sangfielle",
     "extras",
-    "patreon",
+    "patreon-games",
+    "patreon-other",
     "media-club-plus",
     "other",
 ].sort();

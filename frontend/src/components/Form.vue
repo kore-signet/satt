@@ -69,14 +69,18 @@ const season_options = [
     ]
   },
   {
+    label: 'Patreon',
+    items: [
+      { label: 'Patreon (Games)', value: 'patreon-games' },
+      { label: 'Patreon (Other)', value: 'patreon-other' }
+    ]
+  },
+  {
     label: 'Others',
     items: [
 
       {
         label: 'Extras', value: 'extras'
-      },
-      {
-        label: 'Patreon', value: 'patreon'
       },
       {
         label: 'Media Club Plus', value: 'media-club-plus'
