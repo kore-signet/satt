@@ -7,7 +7,7 @@ RUN npm install .
 RUN npm run build
 
 
-FROM rust:1.70.0-buster as builder
+FROM rust:1.84.0-buster as builder
 
 WORKDIR /usr/src/joie
 
