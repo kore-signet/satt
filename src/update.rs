@@ -31,7 +31,7 @@ pub async fn update_database(
     db_dir: PathBuf,
 ) -> Result<(), Box<dyn std::error::Error + Sync + Send>> {
     actix_web::rt::task::spawn_blocking(move || {
-        let mut mirror_reader = ureq::get("https://github.com/kore-signet/transcripts-at-the-table-mirror/archive/refs/heads/data.zip").call()?.into_reader();
+        let mut mirror_reader = ureq::get("https://memorious-records-2.cat-girl.gay/all-plaintext.zip").call()?.into_reader();
         let mut mirror_bytes = Vec::new();
         mirror_reader.read_to_end(&mut mirror_bytes)?;
 
@@ -40,7 +40,7 @@ pub async fn update_database(
             DatabaseBuilder::default();
 
         let seasons: BTreeMap<SeasonId, Season> = serde_json::from_reader(
-            mirror.by_name("transcripts-at-the-table-mirror-data/seasons.json")?,
+            mirror.by_name("seasons.json")?,
         )?;
 
         for Season { id, episodes, .. } in seasons.into_values() {
@@ -49,11 +49,14 @@ pub async fn update_database(
             for episode in episodes {
                 let Some(DownloadOptions { plain }) = episode.download else { continue };
 
-                let mut episode_file = mirror.by_name(
-                    (Path::new("transcripts-at-the-table-mirror-data/").join(plain))
-                        .to_str()
-                        .unwrap(),
-                )?;
+                let mut episode_file = match mirror.by_name(
+                    &plain.to_string_lossy()
+                ) {
+                    Ok(v) => v,
+                    Err(e) => { eprintln!("Couldn't read {}: {e}", &episode.title); continue },
+                };
+
+                
 
                 let mut text = String::with_capacity((episode_file.compressed_size() * 2) as usize);
                 episode_file.read_to_string(&mut text)?;
