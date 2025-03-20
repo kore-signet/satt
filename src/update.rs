@@ -56,8 +56,6 @@ pub async fn update_database(
                     Err(e) => { eprintln!("Couldn't read {}: {e}", &episode.title); continue },
                 };
 
-                
-
                 let mut text = String::with_capacity((episode_file.compressed_size() * 2) as usize);
                 episode_file.read_to_string(&mut text)?;
 

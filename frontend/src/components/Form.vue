@@ -61,11 +61,14 @@ const season_options = [
     ]
   },
   {
-    label: 'Sangfielle',
+    label: 'Other Seasons',
     items: [
       {
         label: 'Sangfielle', value: 'sangfielle'
       },
+      {
+        label: 'Perpetua', value: 'perpetua'
+      }
     ]
   },
   {

@@ -103,6 +103,8 @@ pub enum SeasonId {
     PatreonOther = 15,
     #[strum(serialize = "media-club-plus")]
     MediaClubPlus = 14,
+    #[strum(serialize = "perpetua")]
+    Perpetua = 16,
     #[strum(serialize = "unknown-string")]
     #[default]
     Other = 13,
